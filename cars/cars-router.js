@@ -4,6 +4,7 @@ const db = require('../data/dbConnection.js');
 
 const router = express.Router();
 
+
 router.get("/", (req, res) => {
   db("cars")
     .then(cars => {
@@ -14,6 +15,21 @@ router.get("/", (req, res) => {
       res.status(500).json({ errorMessage: error.message });
     });
 });
+
+router.get("/:id", (req, res) => {
+  const {id} = req.params;
+
+  db("cars")
+    .where({ id })
+    .then(car => {
+      console.log(car);
+      res.status(201).json({ data: car });
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ errorMessage: error.message });
+    });
+})
 
 router.post('/', (req, res) => {
   const post = req.body;
@@ -34,7 +50,23 @@ router.post('/', (req, res) => {
         errorMessage:
           "Please provide all required fields."
       });
-  });
+});
+
+router.delete("/:id", (req, res) => {
+  const {id} = req.params;
+
+  db("cars")
+    .where({ id })
+    .then(car => {
+      console.log(car);
+      res.status(204).json(1);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ errorMessage: error.message });
+    });
+})
+
 
 function isValidPost(post) {
   return Boolean(post.VIN && post.make && post.model && post.mileage);
