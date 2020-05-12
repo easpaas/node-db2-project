@@ -52,20 +52,7 @@ router.post('/', (req, res) => {
       });
 });
 
-router.delete("/:id", (req, res) => {
-  const {id} = req.params;
 
-  db("cars")
-    .where({ id })
-    .then(car => {
-      console.log(car);
-      res.status(204).json(1);
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({ errorMessage: error.message });
-    });
-})
 
 
 function isValidPost(post) {
