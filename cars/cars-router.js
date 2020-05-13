@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
     });
 })
 
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
   const post = req.body;
   isValidPost(post)
   ? db("cars")
@@ -51,6 +51,23 @@ router.post('/', (req, res) => {
           "Please provide all required fields."
       });
 });
+
+router.put("/:id", (req, res) => {
+  const changes = req.body;
+  const {id} = req.params;
+  db("cars")
+  .where({ id })
+  .update(changes)
+  .then(count => {
+    count > 0 ?
+      res.status(200).json({ data: count })
+    :
+      res.status(404).json({ message: `Could not retrieve id ${id}` })
+  })
+  .catch(error => {
+    console.log(error);
+  });
+})
 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
