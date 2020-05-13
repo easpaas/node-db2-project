@@ -7,6 +7,12 @@ module.exports = {
     connection: {
       filename: './data/car-dealer.db3'
     },
+    migrations: {
+      tableName: 'knex_migrations'
+    },
+    seeds: {
+      directory: './seeds'
+    },
     useNullAsDefault: true,
   },
 
@@ -23,7 +29,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations'
-    }
+    },
   }
 
 };

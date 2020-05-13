@@ -52,7 +52,23 @@ router.post('/', (req, res) => {
       });
 });
 
-
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  db("cars")
+    .where({ id })
+    .del()
+    .then(success => {
+      console.log(success);
+      success ? 
+        res.status(204).json()
+      :
+        res.status(404).json({ errorMessage: 'That id doesn\'t exist' })
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(500).json({ errorMessage: error.message })
+    });
+});
 
 
 function isValidPost(post) {
